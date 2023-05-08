@@ -1,1 +1,5 @@
 # How Polarization Has Changed Before and After the 2016 Presidential Election
+
+
+### Abstract
+This project uses an adjacency matrix and heat map to analyze how similarly legislators in the Senate and the House of Representatives vote on bills based on their political affiliation. By comparing the number of agreements and disagreements between Republican-to-Republican, Democrat-to-Democrat, and Republican-to-Democrat party lines, this project visualizes how the Democratic and Republican parties have increasingly diverged in legislative voting patterns since the 2016 Presidential election. This project utilizes data from the 113th, 115th, and 117th session, which corresponds to 2013-2015, 2017-2019, and 2021-2023 respectively. In the end we found that polarization did generally increase in the Senate and some parts of the House, but there was also an increase in bipartisan efforts between the 113th and 117th sessions of the House. The results of this study may have important implications for understanding the current political climate and the ability of legislators to work across party lines. 
