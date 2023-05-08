@@ -1,0 +1,84 @@
+---
+title: "AM50 Final Project"
+author: "Allison Park, Janice Nam and Grace Kim"
+date: "5/09/2023"
+output:
+  pdf_document: default
+
+---
+
+```{r}
+# Reading all CSV
+
+senatevotes113 <- read.csv("S113_votes.csv")
+senatemembers113 <- read.csv("S113_members.csv")
+
+housevotes113 <- read.csv("H113_votes.csv")
+housemembers113 <- read.csv("H113_members.csv")
+
+
+senatevotes115 <- read.csv("S115_votes.csv")
+senatemembers115 <- read.csv("S115_members.csv")
+
+housevotes115 <- read.csv("H115_votes.csv")
+housemembers115 <- read.csv("H115_members.csv")
+
+
+senatevotes117 <- read.csv("S117_votes.csv")
+senatemembers117 <- read.csv("S117_members.csv")
+
+housevotes117 <- read.csv("H117_votes.csv")
+housemembers117 <- read.csv("H117_members.csv")
+
+```
+
+```{r}
+# Function to clean up data
+
+process_senate_data <- function(votes_data, members_data) {
+  # Merge the two data frames
+  senate <- merge(votes_data, members_data, by = "icpsr")
+  senate$congress <- senate$congress.x
+
+  senate <- senate[c("congress", "rollnumber", "cast_code", 
+                     "party_code", "bioname")]
+
+  senate <- senate[senate$rollnumber > 2, ]
+
+  senate <- senate[order(senate$party_code), ]
+  # Reshape data
+  senate <- reshape(senate, direction = "wide", idvar = "bioname", 
+                    timevar = "rollnumber", v.names = "cast_code",
+                    drop = c("congress", "party_code"))
+
+  # Clean up column names
+  colnames(senate)[-1] <- paste0(colnames(senate)[-1])
+
+  return(senate)
+}
+
+```
+
+```{r}
+# Creating the Processed Data
+senate113_processed <- process_senate_data(senatevotes113, senatemembers113)
+house113_processed <- process_senate_data(housevotes113, housemembers113)
+senate115_processed <- process_senate_data(senatevotes115, senatemembers115)
+house115_processed <- process_senate_data(housevotes115, housemembers115)
+senate117_processed <- process_senate_data(senatevotes117, senatemembers117)
+house117_processed <- process_senate_data(housevotes117, housemembers117)
+
+```
+
+```{r}
+# Exporting the Processed Data
+
+write.csv(senate113_processed, "senate113.csv")
+write.csv(house113_processed, "house113.csv")
+write.csv(senate115_processed, "senate115.csv")
+write.csv(house115_processed, "house115.csv")
+write.csv(senate117_processed, "senate117.csv")
+write.csv(house117_processed, "house117.csv")
+
+
+```
